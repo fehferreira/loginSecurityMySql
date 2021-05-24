@@ -1,4 +1,4 @@
-package br.com.personal.loginsecurity.loginspringbootsecurityjpa.model;
+package br.com.personal.loginsecurity.securityMySql.model;
 
 
 import lombok.AllArgsConstructor;
@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 @Data
 @Builder
