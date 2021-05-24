@@ -1,4 +1,4 @@
-package br.com.personal.loginsecurity.loginspringbootsecurityjpa.model;
+package br.com.personal.loginsecurity.securityMySql.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
