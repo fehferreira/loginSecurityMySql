@@ -54,5 +54,13 @@ public class UserServiceTest {
         assertEquals(email, result.getEmail());
     }
 
+    @Test
+    public void testSaveUser(){
+        final String email = "test@test.com";
+
+        User result = userServiceUnderTest.saveUser(User.builder().build());
+
+        assertEquals(email,result.getEmail());
+    }
 
 }
