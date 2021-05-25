@@ -4,17 +4,17 @@ import br.com.personal.loginsecurity.securityMySql.model.User;
 import br.com.personal.loginsecurity.securityMySql.repository.RoleRepository;
 import br.com.personal.loginsecurity.securityMySql.repository.UserRepository;
 import br.com.personal.loginsecurity.securityMySql.service.UserService;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-@SpringBootTest
 public class UserServiceTest {
 
     @Mock
@@ -29,7 +29,7 @@ public class UserServiceTest {
     private UserService userServiceUnderTest;
     private User user;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp(){
         initMocks(this);
         userServiceUnderTest = new UserService(mockUserRepository, mockRoleRepository, mockBCryptPasswordEncoder);
@@ -43,6 +43,15 @@ public class UserServiceTest {
 
         Mockito.when(mockUserRepository.save(any(User.class))).thenReturn(user);
         Mockito.when(mockUserRepository.findByEmail(anyString())).thenReturn(user);
+    }
+
+    @Test
+    public void testFindUserByEmail(){
+        final String email = "test@test.com";
+
+        final User result = userServiceUnderTest.findByEmail(email);
+
+        assertEquals(email, result.getEmail());
     }
 
 
