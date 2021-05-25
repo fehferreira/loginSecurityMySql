@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -39,15 +40,17 @@ public class UserServiceTest {
                 .name("Felipe")
                 .lastName("Ferreira")
                 .email("test@test.com")
+                .userName("felipe.ferreira")
                 .build();
 
         Mockito.when(mockUserRepository.save(any(User.class))).thenReturn(user);
-        Mockito.when(mockUserRepository.findByEmail(anyString())).thenReturn(user);
     }
 
     @Test
     public void testFindUserByEmail(){
         final String email = "test@test.com";
+
+        Mockito.when(mockUserRepository.findByEmail(anyString())).thenReturn(user);
 
         final User result = userServiceUnderTest.findByEmail(email);
 
@@ -61,6 +64,20 @@ public class UserServiceTest {
         User result = userServiceUnderTest.saveUser(User.builder().build());
 
         assertEquals(email,result.getEmail());
+    }
+
+    @Test
+    public void testFindUserByUserName(){
+        final String userName = "felipe.ferreira";
+        final String wrongUserName = "notFelipe.ferreira";
+
+        Mockito.when(userServiceUnderTest.findByUserName(userName)).thenReturn(user);
+        Mockito.when(userServiceUnderTest.findByUserName(wrongUserName)).thenReturn(null);
+
+        User result = userServiceUnderTest.findByUserName(userName);
+
+        assertEquals(userName,result.getUserName());
+        assertNotEquals(wrongUserName, result.getUserName());
     }
 
 }
